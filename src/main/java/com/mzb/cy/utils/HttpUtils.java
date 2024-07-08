@@ -40,8 +40,8 @@ public class HttpUtils {
             conn.setDoOutput(true);
             conn.setDoInput(true);
             conn.setUseCaches(false);
-//            conn.setRequestProperty("Connection", "Keep-Alive");
-//            conn.setRequestProperty("Charset", "UTF-8");
+            conn.setRequestProperty("Connection", "Keep-Alive");
+            conn.setRequestProperty("Charset", "UTF-8");
 //            conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 //            conn.setRequestProperty("accept", "application/json");
 //            conn.setRequestProperty("Cookie", "JSESSIONID=5BcV5Wv+lR2Pp+rsJ27x2gNX.undefined; QIANHAIJSESSIONID=ONBugvA5qSFv1aoMOrpNbf2m6$isfGyF; mag_oper_id=juqi");
