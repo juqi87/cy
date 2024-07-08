@@ -1,11 +1,14 @@
 package com.mzb.cy.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Map;
 
 /**
  * @auther v-juqi
  * @createDate 2024/7/8 11:50
  **/
+@Slf4j
 public class CySignUtils {
 
 
@@ -33,10 +36,10 @@ public class CySignUtils {
         }
 
         String signStr = builder.toString() + signkey;
-        System.out.println("加签字符串:" + builder + signkey);
-        System.out.println("签名:" + md5sign(signStr, "utf-8"));
+        log.info("加签字符串:" + builder + signkey);
+        log.info("签名:" + md5sign(signStr, "utf-8"));
 
-        return "";
+        return signStr;
     }
 
     private static String md5sign(String source, String encode) {
