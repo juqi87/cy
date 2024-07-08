@@ -1,3 +1,43 @@
 server:
-  port: 8080
+  port: 9090
   context-path: /cy
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: cy
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cy?useUnicode=true&characterEncoding=utf-8
+    username: cy
+    password: cy20240708
+    tomcat:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml
+  type-aliases-package: com.monster.weiqimsc.model
+  #  configuration:
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml
+
+logging:
+  level:
+    root: info
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%-5level] [%logger{36}] - %msg%n"
+  rolling-policy: #日志文件的滚动策略为按日期滚动，每天生成一个新的日志文件，保留最近7天的日志文件。
+    file-name-pattern: /app/SFiles/gptalk/myapp.%d{yyyy-MM-dd}.log
+    max-history: 14
+  file:
+    name: /app/SFiles/gptalk/info.log
+
+info:
+  app.name: cy
+  company.name: www.mzb.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

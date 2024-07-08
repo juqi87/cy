@@ -7,7 +7,9 @@ package com.mzb.cy.common;
 public class CyConstant {
 
     //商户号
+    public static final String partnerId = "";
 
     //key
+    public static final String key = "123456";
 
 }

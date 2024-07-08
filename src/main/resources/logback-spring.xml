@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 文件输出格式 -->
+    <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
+    <!-- test文件路径 -->
+    <property name="TEST_FILE_PATH" value="/app/SFiles/cy/info.log" />
+    <property name="sql.file.path" value="/app/SFiles/cy/sql.log" />
+    <!-- pro文件路径 
+    <property name="PRO_FILE_PATH" value="/opt/test/log" /> -->
+    <property name="PRO_FILE_PATH" value="/home/naiping/apache-tomcat-7.0.61/logs/prod.log" />
+    
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <logger name="com.mzb.cy" level="info" />
+
+        <appender name="TEST-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>${TEST_FILE_PATH}</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- 文件名称 -->
+                <fileNamePattern>${TEST_FILE_PATH}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <!-- 文件最大保存历史数量 -->
+                <MaxHistory>100</MaxHistory>
+            </rollingPolicy>
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN}</pattern>
+            </layout>
+        </appender>
+
+<!--        <appender name="sql" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--            <file>${sql.file.path}</file>-->
+<!--            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--                <FileNamePattern>${sql.file.path}/sql.%d{yyyy-MM-dd}.%i.log</FileNamePattern>-->
+<!--                <MaxHistory>30</MaxHistory>-->
+<!--                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+<!--                    &lt;!&ndash; or whenever the file size reaches 100MB &ndash;&gt;-->
+<!--                    <maxFileSize>10MB</maxFileSize>-->
+<!--                </timeBasedFileNamingAndTriggeringPolicy>-->
+<!--            </rollingPolicy>-->
+
+<!--        </appender>-->
+<!--        <logger name="org.mybatis" level="DEBUG" additivity="false" >-->
+<!--            <appender-ref ref="sql" />-->
+<!--        </logger>-->
+
+
+<!--        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--            <encoder>-->
+<!--                <pattern>%d{HH:mm:ss.SSS} %5p %t %c{2}:%L - %m%n</pattern>-->
+<!--            </encoder>-->
+<!--        </appender>-->
+
+<!--        <logger name="org.mybatis" level="DEBUG" additivity="false">-->
+<!--            <appender-ref ref="STDOUT"/>-->
+<!--        </logger>-->
+
+
+
+        <root level="info">
+            <appender-ref ref="CONSOLE" />
+            <appender-ref ref="TEST-FILE" />
+<!--            <appender-ref ref="STDOUT"/>-->
+
+        </root>
+    </springProfile>
+    
+    <!-- 测试环境 -->
+    <springProfile name="test">
+        <!-- 每天产生一个文件 -->
+        <appender name="TEST-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>${TEST_FILE_PATH}</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- 文件名称 -->
+                <fileNamePattern>${TEST_FILE_PATH}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <!-- 文件最大保存历史数量 -->
+                <MaxHistory>100</MaxHistory>
+            </rollingPolicy>
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN}</pattern>
+            </layout>
+        </appender>
+        <root level="info">
+            <appender-ref ref="TEST-FILE" />
+        </root>
+    </springProfile>
+    
+    <!-- 生产环境 -->
+    <springProfile name="prod">
+        <appender name="PROD_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${PRO_FILE_PATH}</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${PRO_FILE_PATH}/warn.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <MaxHistory>100</MaxHistory>
+            </rollingPolicy>
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN}</pattern>
+            </layout>
+        </appender>
+        <root level="warn">
+            <appender-ref ref="PROD_FILE" />
+        </root>
+    </springProfile>
+</configuration>
