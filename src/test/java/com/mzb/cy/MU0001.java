@@ -19,8 +19,8 @@ public class MU0001 {
         StringBuilder content = new StringBuilder();
         content.append("interCode=").append("MU0001").append("&")
                 .append("character=").append("UTF-8").append("&")
-                .append("ipAddress=").append("120.77.38.223").append("&")
-                .append("partnerId=").append("S9999083").append("&")
+                .append("ipAddress=").append("112.64.63.231").append("&")
+                .append("partnerId=").append("S9990188").append("&")
                 .append("requestId=").append("201658781116").append("&")
                 .append("reqTime=").append("20190416195825").append("&")
                 .append("signType=").append("MD5").append("&")
