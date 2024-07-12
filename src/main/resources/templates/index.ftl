@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Majestic Admin</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/vendors/base/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/majestic/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/majestic/vendors/base/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="/vendors/css/style.css">
+    <link rel="stylesheet" href="/majestic/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="../../images/favicon.png" />
+    <link rel="shortcut icon" href="/majestic/images/favicon.png" />
 </head>
 
 <body>
@@ -22,8 +22,8 @@
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="navbar-brand-wrapper d-flex justify-content-center">
             <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
-                <a class="navbar-brand brand-logo" href="../../index.html"><img src="../../images/logo.svg" alt="logo"/></a>
-                <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../images/logo-mini.svg" alt="logo"/></a>
+                <a class="navbar-brand brand-logo" href="../../index.html"><img src="/majestic/images/logo.svg" alt="logo"/></a>
+                <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="/majestic/images/logo-mini.svg" alt="logo"/></a>
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                     <span class="mdi mdi-sort-variant"></span>
                 </button>
@@ -52,7 +52,7 @@
                         <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
                         <a class="dropdown-item">
                             <div class="item-thumbnail">
-                                <img src="../../images/faces/face4.jpg" alt="image" class="profile-pic">
+                                <img src="/majestic/images/faces/face4.jpg" alt="image" class="profile-pic">
                             </div>
                             <div class="item-content flex-grow">
                                 <h6 class="ellipsis font-weight-normal">David Grey
@@ -64,7 +64,7 @@
                         </a>
                         <a class="dropdown-item">
                             <div class="item-thumbnail">
-                                <img src="../../images/faces/face2.jpg" alt="image" class="profile-pic">
+                                <img src="/majestic/images/faces/face2.jpg" alt="image" class="profile-pic">
                             </div>
                             <div class="item-content flex-grow">
                                 <h6 class="ellipsis font-weight-normal">Tim Cook
@@ -76,7 +76,7 @@
                         </a>
                         <a class="dropdown-item">
                             <div class="item-thumbnail">
-                                <img src="../../images/faces/face3.jpg" alt="image" class="profile-pic">
+                                <img src="/majestic/images/faces/face3.jpg" alt="image" class="profile-pic">
                             </div>
                             <div class="item-content flex-grow">
                                 <h6 class="ellipsis font-weight-normal"> Johnson
@@ -138,7 +138,7 @@
                 </li>
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                        <img src="../../images/faces/face5.jpg" alt="profile"/>
+                        <img src="/majestic/images/faces/face5.jpg" alt="profile"/>
                         <span class="nav-profile-name">Louis Barnett</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
@@ -653,12 +653,12 @@
 </div>
 <!-- container-scroller -->
 <!-- plugins:js -->
-<script src="../../vendors/base/vendor.bundle.base.js"></script>
+<script src="/majestic/vendors/base/vendor.bundle.base.js"></script>
 <!-- endinject -->
 <!-- inject:js -->
-<script src="../../js/off-canvas.js"></script>
-<script src="../../js/hoverable-collapse.js"></script>
-<script src="../../js/template.js"></script>
+<script src="/majestic/js/off-canvas.js"></script>
+<script src="/majestic/js/hoverable-collapse.js"></script>
+<script src="/majestic/js/template.js"></script>
 <!-- endinject -->
 </body>
 
