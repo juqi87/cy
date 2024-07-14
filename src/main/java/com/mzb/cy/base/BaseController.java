@@ -1,4 +1,4 @@
-package com.mzb.cy.controller.base;
+package com.mzb.cy.base;
 
 public class BaseController {
 

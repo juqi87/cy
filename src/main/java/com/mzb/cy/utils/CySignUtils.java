@@ -2,6 +2,7 @@ package com.mzb.cy.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 /**
@@ -12,13 +13,25 @@ import java.util.Map;
 public class CySignUtils {
 
 
-    public static String sign(Map<String, String> paramsMap, String signkey){
+    public static <T> String signContent(T obj, String signkey){
 
         StringBuilder content = new StringBuilder();
 
-        for (String key : paramsMap.keySet()){
-            String value = paramsMap.get(key);
-            content.append(key).append("=").append(value).append("&");
+        Class<?> clazz = obj.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            try {
+                // 设置访问权限，因为字段可能是私有的
+                field.setAccessible(true);
+                System.out.println(field.getName() + ": " + field.get(obj));
+                content.append(field.getName())
+                        .append("=")
+                        .append(field.get(obj))
+                        .append("&");
+            } catch (IllegalAccessException e) {
+                log.error(e.getMessage());
+                throw new RuntimeException(e);
+            }
         }
 
         String[] arrs = content.toString().split("\\&");
@@ -39,7 +52,10 @@ public class CySignUtils {
         log.info("加签字符串:" + builder + signkey);
         log.info("签名:" + md5sign(signStr, "utf-8"));
 
-        return signStr;
+        content.append("hmac=").append(signStr);
+
+
+        return content.toString();
     }
 
     private static String md5sign(String source, String encode) {

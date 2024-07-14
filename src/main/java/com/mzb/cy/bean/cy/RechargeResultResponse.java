@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class RechargeResult {
+public class RechargeResultResponse {
 
     private String code;
     private String msg;
@@ -15,8 +15,8 @@ public class RechargeResult {
     private String signType;
     private String orderId;
     private String muCard;
+    private String status;
     private String version;
     private String hmac;
-    //data  ?
 
 }
