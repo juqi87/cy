@@ -10,6 +10,7 @@ public enum BasicRespCode {
     DATA_FOMART_MATCH_ERROR("0004", "数据格式不正确"),
     DATA_IS_NULL("0005", "暂无数据"),
     DATA_INSERT_FAIL("0006", "数据新增失败"),
+    DATA_UPDATE_FAIL("0007", "数据更新失败"),
 
     ;
 

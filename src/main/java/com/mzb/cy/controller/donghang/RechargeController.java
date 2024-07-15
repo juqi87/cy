@@ -1,4 +1,4 @@
-package com.mzb.cy.controller.cy;
+package com.mzb.cy.controller.donghang;
 
 import com.mzb.cy.base.BaseController;
 import com.mzb.cy.bean.vo.RechargeVO;
@@ -22,7 +22,7 @@ public class RechargeController extends BaseController {
     public String toRecharge(){
         log.info("进入充值页面");
 
-        return "recharge";
+        return "cy/recharge";
     }
 
     @PostMapping

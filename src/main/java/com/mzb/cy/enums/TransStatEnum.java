@@ -1,13 +1,24 @@
 package com.mzb.cy.enums;
 
-public class TransStatEnum {
+import lombok.Getter;
 
+@Getter
+public enum TransStatEnum {
 
-    private String code;
-    private String desc;
+    I("I", "初始"),
+    P("P", "处理中"),
+    S("S", "成功"),
+    F("F", "失败"),
+    C("C", "取消"),
 
+    ;
 
-    public String getCode() {
-        return code;
+    private final String code;
+    private final String desc;
+
+    TransStatEnum(String code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
+
 }
