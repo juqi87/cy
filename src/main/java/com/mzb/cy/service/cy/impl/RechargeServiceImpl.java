@@ -7,6 +7,8 @@ import com.mzb.cy.bean.cy.RechargeRequest;
 import com.mzb.cy.bean.cy.RechargeResponse;
 import com.mzb.cy.bean.vo.RechargeVO;
 import com.mzb.cy.common.CyConstant;
+import com.mzb.cy.dao.CyOrdLogMapper;
+import com.mzb.cy.dao.model.CyOrdLogDO;
 import com.mzb.cy.enums.CyRespEnum;
 import com.mzb.cy.service.cy.RechargeService;
 import com.mzb.cy.utils.CySignUtils;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -24,8 +27,17 @@ import java.util.UUID;
 public class RechargeServiceImpl implements RechargeService {
 
 
+    @Resource
+    private CyOrdLogMapper cyOrdLogMapper;
+
     @Override
     public void recharge(RechargeVO vo) {
+
+        String transDate = DateUtils.getCurrentDate();
+
+        CyOrdLogDO cycleLogDO = new CyOrdLogDO();
+        cycleLogDO.setTransDate(transDate);
+
 
         String requestId = "requestId" + UUID.randomUUID().toString();
 
@@ -40,7 +52,7 @@ public class RechargeServiceImpl implements RechargeService {
 
         String macContent = CySignUtils.signContent(request, CyConstant.key);
 
-        //DB
+
 
         Map<String,String> head = new HashMap<>();
         head.put("AuthToken","123456");

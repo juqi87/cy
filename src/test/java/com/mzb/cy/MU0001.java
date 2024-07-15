@@ -21,7 +21,7 @@ public class MU0001 {
                 .append("character=").append("UTF-8").append("&")
                 .append("ipAddress=").append("112.64.63.231").append("&")
                 .append("partnerId=").append("S9990188").append("&")
-                .append("requestId=").append("201658781116").append("&")
+                .append("requestId=").append("201658781106").append("&")
                 .append("reqTime=").append("20190416195825").append("&")
                 .append("signType=").append("MD5").append("&")
                 .append("version=").append("1.0.0").append("&")
