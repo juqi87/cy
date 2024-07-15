@@ -5,10 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-/**
- * @auther v-juqi
- * @createDate 2024/7/8 11:50
- **/
 @Slf4j
 public class CySignUtils {
 

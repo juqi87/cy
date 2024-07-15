@@ -6,6 +6,7 @@ import com.mzb.cy.base.BasicRespCode;
 import com.mzb.cy.base.BusinessException;
 import com.mzb.cy.bean.cy.RechargeRequest;
 import com.mzb.cy.bean.cy.RechargeResponse;
+import com.mzb.cy.bean.vo.CyOrdLogVO;
 import com.mzb.cy.bean.vo.RechargeVO;
 import com.mzb.cy.common.CyConstant;
 import com.mzb.cy.dao.CyOrdLogMapper;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -105,8 +107,18 @@ public class RechargeServiceImpl implements RechargeService {
     }
 
     @Override
+    public List<CyOrdLogVO> queryLogForPage(RechargeVO vo) {
+        log.info("分页查询log结果， condition==>{}", vo);
+
+
+
+        return null;
+    }
+
+    @Override
     public void queryResult(RechargeVO vo) {
         log.info("调用畅由支付接口查询结果");
+
 
 
 

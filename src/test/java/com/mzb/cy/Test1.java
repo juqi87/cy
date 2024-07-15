@@ -2,10 +2,6 @@ package com.mzb.cy;
 
 import java.net.URLEncoder;
 
-/**
- * @auther v-juqi
- * @createDate 2024/7/8 11:26
- **/
 public class Test1 {
 
     public static void main(String[] args) throws Exception {

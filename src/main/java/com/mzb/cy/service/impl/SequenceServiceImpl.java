@@ -7,10 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @auther v-juqi
- * @createDate 2024/7/15 10:22
- **/
 @Service
 @Slf4j
 public class SequenceServiceImpl implements SequenceService {
