@@ -38,15 +38,12 @@ public interface CyOrdLogMapper {
                     "<if test='transType != null'>",
                         "trans_type=#{transType},",
                     "</if>",
-                    "<if test='ordId != null'>",
-                        "ord_id=#{ordId},",
-                    "</if>",
                 "</trim>",
             "where trans_date=#{transDate} and trans_seq_id=#{transSeqId}" ,
             "</script>"})
     public Integer updateByPk(CyOrdLogDO record);
 
 
-    public List<CyOrdLogDO> queryForPage(CyOrdLogDO vo);
+    public List<CyOrdLogDO> queryForPage(CyOrdLogDO cyOrdLogDO);
 
 }

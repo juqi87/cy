@@ -27,7 +27,7 @@
             <property name="trimStrings" value="true"/>  
         </javaModelGenerator>  
         <!-- 生成映射文件的包名和位置-->  
-        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/mybatis/">
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/mybatis/mapper/">
             <property name="enableSubPackages" value="true"/>  
         </sqlMapGenerator>  
         <!-- 生成DAO的包名和位置-->  

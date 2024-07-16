@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mzb.cy.dao.TestMapper">
-    <resultMap id="BaseResultMap" type="com.mzb.cy.dao.model.TestDO">
-        <result column="DB_STAT" jdbcType="CHAR" property="dbStat" />
+<mapper namespace="com.mzb.cy.dao.CyOrdLogMapper">
+    <!-- resultMap 示例 -->
+    <resultMap id="ResultMap" type="com.mzb.cy.dao.model.CyOrdLogDO">
+        <id property="transSeqId" column="trans_seq_id"/>
+        <result property="transDate" column="trans_date"/>
+        <result property="transType" column="trans_type"/>
+        <result property="muCard" column="mu_card"/>
+        <result property="points" column="points"/>
+        <result property="ipAddress" column="ip_address"/>
+        <result property="partnerId" column="partner_id"/>
+        <result property="stat" column="stat"/>
+        <result property="ordId" column="ord_id"/>
     </resultMap>
 
-
-    <select id="getVisitStat" resultType="String">
-        select db_stat from TEST
+    <select id="queryForPage" parameterType="map" resultMap="ResultMap">
+        SELECT * FROM cy_ord_log
+        ORDER BY trans_seq_id
+            LIMIT #{limit} OFFSET #{offset}
     </select>
 
 
 
-    <insert id="insert" parameterType="com.mzb.cy.dao.model.TestDO">
-        insert into TEST (DB_STAT)
-        values (#{dbStat,jdbcType=CHAR})
-    </insert>
-    <insert id="insertSelective" parameterType="com.mzb.cy.dao.model.TestDO">
-        insert into TEST
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="dbStat != null">
-                DB_STAT,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="dbStat != null">
-                #{dbStat,jdbcType=CHAR},
-            </if>
-        </trim>
-    </insert>
+
+
+
 </mapper>
