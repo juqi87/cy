@@ -2,7 +2,7 @@ package com.mzb.cy.controller.donghang;
 
 import com.mzb.cy.base.BaseController;
 import com.mzb.cy.bean.vo.RechargeVO;
-import com.mzb.cy.service.cy.RechargeService;
+import com.mzb.cy.bis.cy.RechargeManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 public class RechargeController extends BaseController {
 
     @Resource
-    private RechargeService rechargeService;
+    private RechargeManager rechargeManager;
 
     @GetMapping("recharge")
     public String toRecharge(){
@@ -31,7 +31,7 @@ public class RechargeController extends BaseController {
         log.info("开始进行积分充值业务, vo==>{}", vo);
 
         try{
-            rechargeService.recharge(vo);
+            rechargeManager.recharge(vo);
         }catch (Exception e) {
             log.error("积分充值业务异常", e);
 

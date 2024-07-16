@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzb.cy.dao.TestMapper">
+    <resultMap id="BaseResultMap" type="com.mzb.cy.dao.model.TestDO">
+        <result column="DB_STAT" jdbcType="CHAR" property="dbStat" />
+    </resultMap>
+
+
+    <select id="getVisitStat" resultType="String">
+        select db_stat from TEST
+    </select>
+
+
+
+    <insert id="insert" parameterType="com.mzb.cy.dao.model.TestDO">
+        insert into TEST (DB_STAT)
+        values (#{dbStat,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.mzb.cy.dao.model.TestDO">
+        insert into TEST
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dbStat != null">
+                DB_STAT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dbStat != null">
+                #{dbStat,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

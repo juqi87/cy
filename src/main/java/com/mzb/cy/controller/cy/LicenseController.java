@@ -1,6 +1,6 @@
 package com.mzb.cy.controller.cy;
 
-import com.mzb.cy.service.LicenseManager;
+import com.mzb.cy.bis.cy.LicenseManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

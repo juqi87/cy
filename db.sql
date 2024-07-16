@@ -41,7 +41,7 @@ INSERT INTO sequence VALUES ('CY_ORD_SEQ_ID', '0', '1');
 create table cy_ord_log
 (
     trans_date   char(8)     not null comment '交易日期',
-    trans_seq_id varchar(8)  not null comment '交易流水',
+    trans_seq_id varchar(10)  not null comment '交易流水',
     trans_type   varchar(4)  not null comment '交易类型',
     mu_card      varchar(10) not null comment '东航卡号',
     points       varchar(10) not null comment '充值东航积分',

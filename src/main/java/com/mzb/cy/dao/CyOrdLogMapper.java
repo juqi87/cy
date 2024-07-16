@@ -4,6 +4,8 @@ import com.mzb.cy.dao.model.CyOrdLogDO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 public interface CyOrdLogMapper {
 
     @Insert("insert into cy_ord_log " +
@@ -43,5 +45,8 @@ public interface CyOrdLogMapper {
             "where trans_date=#{transDate} and trans_seq_id=#{transSeqId}" ,
             "</script>"})
     public Integer updateByPk(CyOrdLogDO record);
+
+
+    public List<CyOrdLogDO> queryForPage(CyOrdLogDO vo);
 
 }

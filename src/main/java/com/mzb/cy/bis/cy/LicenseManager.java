@@ -1,9 +1,8 @@
-package com.mzb.cy.service;
+package com.mzb.cy.bis.cy;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class LicenseManager {
