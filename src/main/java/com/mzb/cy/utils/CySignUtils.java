@@ -19,7 +19,9 @@ public class CySignUtils {
             try {
                 // 设置访问权限，因为字段可能是私有的
                 field.setAccessible(true);
-                System.out.println(field.getName() + ": " + field.get(obj));
+                if(field.get(obj) == null){
+                    continue;
+                }
                 content.append(field.getName())
                         .append("=")
                         .append(field.get(obj))
@@ -46,9 +48,10 @@ public class CySignUtils {
 
         String signStr = builder.toString() + signkey;
         log.info("加签字符串:" + builder + signkey);
-        log.info("签名:" + md5sign(signStr, "utf-8"));
+        String sign  = MD5Utils.md5sign(signStr, "utf-8");
+        log.info("签名:" + sign);
 
-        content.append("hmac=").append(signStr);
+        content.append("hmac=").append(sign);
 
 
         return content.toString();

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-@RestController
+@Controller
 @Slf4j
 public class VisitController {
 

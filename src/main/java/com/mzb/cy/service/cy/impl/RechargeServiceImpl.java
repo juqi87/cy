@@ -68,7 +68,7 @@ public class RechargeServiceImpl implements RechargeService {
                 .setMuCard(vo.getMuCard())
                 .setPoints(vo.getPoints().toString())
                 .setIpAddress("112.64.63.231")
-                .setReqTime(DateUtils.getCurrentTime())
+                .setReqTime(DateUtils.getCurrentDateTime())
                 .setNotifyUrl(CyConstant.notifyUrl);
 
         String macContent = CySignUtils.signContent(request, CyConstant.key);
@@ -80,7 +80,8 @@ public class RechargeServiceImpl implements RechargeService {
 
         log.info("调用畅由支付接口，macContent:{}",macContent);
         String response = HttpRequest.post(CyConstant.url)
-                .addHeaders(head).body(macContent)
+                .addHeaders(head)
+                .body(macContent)
                 .timeout(30000)
                 .execute()
                 .body();

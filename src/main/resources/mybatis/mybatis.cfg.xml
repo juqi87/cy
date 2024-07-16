@@ -8,6 +8,10 @@
 	<settings>
 		<setting name="cacheEnabled" value="true" /><!-- 二级缓存开启 -->
 		<setting name="logImpl" value="STDOUT_LOGGING" /><!-- 开启日志 -->
+
+		<!-- 启用注解支持 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="cacheEnabled" value="true"/>
 	</settings>
 
 </configuration>

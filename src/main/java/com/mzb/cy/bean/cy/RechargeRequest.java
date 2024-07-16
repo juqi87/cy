@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringUtils;
 public class RechargeRequest {
 
     private String interCode = "MU0001";
-    private String character = "00";
+    private String character = "UTF-8";//"00";
     private String version = "1.0.0";
     private String ipAddress;
     private String partnerId;
@@ -17,6 +17,7 @@ public class RechargeRequest {
 
     private String reqTime;//yyyyMMddHHmmss
     private String signType = "MD5";
+    private String type = "api";
     private String muCard;
     private String points;
     private String notifyUrl;

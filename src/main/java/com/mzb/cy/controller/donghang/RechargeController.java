@@ -25,7 +25,7 @@ public class RechargeController extends BaseController {
         return "cy/recharge";
     }
 
-    @PostMapping
+    @PostMapping("doRecharge")
     @ResponseBody
     public String doRecharge(RechargeVO vo){
         log.info("开始进行积分充值业务, vo==>{}", vo);

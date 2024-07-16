@@ -34,7 +34,7 @@ return currval(v_seq_name);
 end;
 
 
-INSERT INTO sequence VALUES ('CY_ORD_SEQ_ID', '1', '1');
+INSERT INTO sequence VALUES ('CY_ORD_SEQ_ID', '0', '1');
 
 
 -- auto-generated definition
