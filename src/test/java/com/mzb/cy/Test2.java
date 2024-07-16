@@ -51,7 +51,7 @@ public class Test2 {
 
         try {
             // 创建HttpPost对象，指定请求URL
-            HttpPost httpPost = new HttpPost(CyConstant.url);
+            HttpPost httpPost = new HttpPost(CyConstant.recharge_url);
 
             // 设置请求体
             StringEntity input = new StringEntity("{\"key\":\"value\"}", "UTF-8");
