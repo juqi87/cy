@@ -14,7 +14,7 @@
         <result property="ordId" column="ord_id"/>
     </resultMap>
 
-    <select id="queryForPage" parameterType="map" resultMap="ResultMap">
+    <select id="queryForPage" parameterType="com.mzb.cy.dao.model.ext.CyOrdLogExtDO" resultMap="ResultMap">
         SELECT * FROM cy_ord_log
         ORDER BY trans_seq_id
             LIMIT #{limit} OFFSET #{offset}

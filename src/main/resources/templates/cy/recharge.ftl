@@ -35,26 +35,6 @@
 
 
 
-
-        // $(function () {
-        //
-        //     $("#submitBtn").click(function () {
-        //         let muCard = $("#muCard").val();
-        //         let points = $("#points").val();
-        //         console.log(muCard, points)
-        //         $.ajax({
-        //             url: "doRecharge",
-        //             type: "post",
-        //             data: {
-        //                 muCard: muCard,
-        //                 points: points
-        //             },
-        //             success: function (data) {
-        //                 alert(data);
-        //             }
-        //         })
-        //     })
-        // })
     </script>
 
 </html>

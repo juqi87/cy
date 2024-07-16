@@ -22,7 +22,7 @@ public class MU0001 {
                 .append("version=").append("1.0.0").append("&")
                 .append("ipAddress=").append("112.64.63.231").append("&")
                 .append("partnerId=").append("S9990188").append("&")
-                .append("requestId=").append("mzb202407150000000011").append("&")
+                .append("requestId=").append("mzb202407150000000012").append("&")
                 .append("reqTime=").append("20240715234956").append("&")
                 .append("signType=").append("MD5").append("&")
 
@@ -54,7 +54,7 @@ public class MU0001 {
 
         String response = HttpRequest.post(url).addHeaders(head).body(content.toString()).timeout(30000).execute().body();
         System.out.println(response);
-
+//{"code":0,"msg":"成功","data":"{\"orderId\":\"MU24071613351287000025\",\"requestId\":\"mzb202407150000000012\",\"hmac\":\"a6620a2154d9dfa8b4572df3664694a5\",\"muCard\":\"614011667001\",\"signType\":\"MD5\",\"partnerId\":\"S9990188\",\"interCode\":\"MU0001\",\"version\":\"1.0.0\"}"}
 
     }
 }
