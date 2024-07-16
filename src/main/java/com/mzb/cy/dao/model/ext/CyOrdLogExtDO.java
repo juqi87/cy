@@ -11,6 +11,8 @@ public class CyOrdLogExtDO extends CyOrdLogDO {
 
     private Integer pageNum;
     private Integer pageSize;
-    private Integer total;
+    private Integer totalNum;
+
+    private Integer offset;
 
 }

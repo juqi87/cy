@@ -12,12 +12,33 @@
         <result property="partnerId" column="partner_id"/>
         <result property="stat" column="stat"/>
         <result property="ordId" column="ord_id"/>
+        <result property="respCode" column="resp_code"/>
+        <result property="respMsg" column="resp_msg"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
     </resultMap>
 
     <select id="queryForPage" parameterType="com.mzb.cy.dao.model.ext.CyOrdLogExtDO" resultMap="ResultMap">
-        SELECT * FROM cy_ord_log
+        SELECT *
+        FROM cy_ord_log
+        where 1=1
+        <if test="transDate != null">
+            and trans_date=#{transDate}
+        </if>
+        <if test="transSeqId != null">
+            and trans_seq_id=#{transSeqId}
+        </if>
+        <if test="muCard != null">
+            and mu_card=#{muCard}
+        </if>
+        <if test="transType != null">
+            and trans_type=#{transType}
+        </if>
+        <if test="stat != null">
+            and stat=#{stat}
+        </if>
         ORDER BY trans_seq_id
-            LIMIT #{limit} OFFSET #{offset}
+            LIMIT #{offset} , #{pageSize}
     </select>
 
 

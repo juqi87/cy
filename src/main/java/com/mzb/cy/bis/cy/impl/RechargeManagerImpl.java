@@ -17,17 +17,18 @@ import com.mzb.cy.dao.CyOrdLogMapper;
 import com.mzb.cy.dao.model.CyOrdLogDO;
 import com.mzb.cy.enums.CyRespEnum;
 import com.mzb.cy.enums.TransStatEnum;
+import com.mzb.cy.enums.TransTypeEnum;
+import com.mzb.cy.service.CyOrdLogService;
 import com.mzb.cy.service.SequenceService;
 import com.mzb.cy.utils.CySignUtils;
 import com.mzb.cy.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("rechargeManager")
 @Slf4j
@@ -38,6 +39,8 @@ public class RechargeManagerImpl implements RechargeManager {
     private CyOrdLogMapper cyOrdLogMapper;
     @Autowired
     private SequenceService sequenceService;
+    @Autowired
+    private CyOrdLogService cyOrdLogService;
 
     @Override
     public void recharge(RechargeVO vo) {
@@ -49,7 +52,7 @@ public class RechargeManagerImpl implements RechargeManager {
         CyOrdLogDO cycleLogDO = new CyOrdLogDO();
         cycleLogDO.setTransDate(transDate)
                 .setTransSeqId(transSeqId)
-                .setTransType("CYDH")
+                .setTransType(TransTypeEnum.CYDH.getType())
                 .setStat(TransStatEnum.I.getCode())
                 .setMuCard(vo.getMuCard())
                 .setPoints(vo.getPoints().toString())
@@ -89,18 +92,22 @@ public class RechargeManagerImpl implements RechargeManager {
         log.info("调用畅由支付接口，response:{}",response);
 
         CyBaseResponse<RechargeResult> result = JSON.parseObject(response, CyBaseResponse.class);
-        if(!StringUtils.equals(result.getCode(), CyRespEnum.SUCCESS.getCode())){
-//            log.info("调用畅由支付接口失败，订单号:{}",result.getOrderId());
-            throw new BusinessException(result.getCode(), result.getMsg());
-        }
 
-//        log.info("调用畅由支付接口成功，订单号:{}",result.getOrderId());
         CyOrdLogDO cyOrdLogDOUpdate = new CyOrdLogDO();
         cyOrdLogDOUpdate.setTransDate(transDate)
-                .setTransSeqId(transSeqId)
-                .setStat(TransStatEnum.P.getCode())
-//                .setOrdId(result.getOrderId())
-        ;
+                        .setTransSeqId(transSeqId)
+                        .setRespCode(result.getCode())
+                        .setRespMsg(result.getMsg());
+
+        if(StringUtils.equals(result.getCode(), CyRespEnum.SUCCESS.getCode())){
+            log.info("调用畅由支付接口成功，订单号:{}",result.getData().getOrderId());
+            cyOrdLogDOUpdate.setStat(TransStatEnum.P.getCode())
+                    .setOrdId(result.getData().getOrderId());
+
+        }else{
+            log.info("调用畅由支付接口失败，订单==>{}, resp=>:{}", cycleLogDO, result.getCode());
+            cyOrdLogDOUpdate.setStat(TransStatEnum.F.getCode());
+        }
 
         resp = cyOrdLogMapper.updateByPk(cyOrdLogDOUpdate);
         if(resp != 1){
@@ -113,18 +120,65 @@ public class RechargeManagerImpl implements RechargeManager {
     public List<CyOrdLogVO> queryLogForPage(RechargeVO vo) {
         log.info("分页查询log结果， condition==>{}", vo);
 
+        List<CyOrdLogDO> cyOrdLogDOList = cyOrdLogService.queryLogForPage(vo);
 
+        List<CyOrdLogVO> vos = new ArrayList<>();
+        for (CyOrdLogDO cyOrdLogDO : cyOrdLogDOList) {
+            CyOrdLogVO cyOrdLogVO = new CyOrdLogVO();
+            BeanUtils.copyProperties(cyOrdLogDO, cyOrdLogVO);
 
-        return null;
+            //处理中主动查询订单状态
+            if(StringUtils.equals(cyOrdLogDO.getStat(), TransStatEnum.P.getCode())){
+
+            }
+
+            cyOrdLogVO.setStatDesc(Objects.requireNonNull(TransStatEnum.getByCode(cyOrdLogDO.getStat())).getDesc());
+
+            vos.add(cyOrdLogVO);
+        }
+
+        return vos;
     }
 
     @Override
-    public void queryResult(RechargeVO vo) {
+    public String queryResult(CyOrdLogDO cyOrdLogDO) {
         log.info("调用畅由支付接口查询结果");
+        Random random = new Random();
+        int r = random.nextInt(1000)+1000;
+        String requestId = "mzb-q" + r + cyOrdLogDO.getTransDate() + cyOrdLogDO.getTransSeqId();
+        QueryRechargeRequest request = new QueryRechargeRequest();
+        request.setIpAddress("112.64.63.231")
+                .setPartnerId(CyConstant.partnerId)
+                .setRequestId(requestId)
+                .setReqTime(DateUtils.getCurrentDateTime())
+                .setOrdId(cyOrdLogDO.getOrdId())
+                .setMuCard(cyOrdLogDO.getMuCard());
 
+        String macContent = CySignUtils.signContent(request, CyConstant.key);
 
+        Map<String,String> head = new HashMap<>();
+        head.put("AuthToken","123456");
+        head.put("Content-Type","application/json");
 
+        log.info("调用畅由订单查询接口，request:{}",macContent);
+        String response = HttpRequest.post(CyConstant.query_url)
+                .addHeaders(head)
+                .body(macContent)
+                .timeout(30000)
+                .execute()
+                .body();
+        log.info("调用畅由订单查询接口，response:{}",response);
 
+        CyBaseResponse<RechargeResult> result = JSON.parseObject(response, CyBaseResponse.class);
+
+        //TODO
+        if(StringUtils.equals(result.getCode(), CyRespEnum.SUCCESS.getCode())){
+
+        }
+
+        //update DB
+
+        return cyOrdLogDO.getStat();
     }
 
     @Override

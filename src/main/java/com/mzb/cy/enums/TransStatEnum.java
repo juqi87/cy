@@ -21,4 +21,12 @@ public enum TransStatEnum {
         this.desc = desc;
     }
 
+    public static TransStatEnum getByCode(String code) {
+        for (TransStatEnum transStatEnum : TransStatEnum.values()) {
+            if (transStatEnum.getCode().equals(code)) {
+                return transStatEnum;
+            }
+        }
+        return null;
+    }
 }

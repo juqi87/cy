@@ -2,6 +2,7 @@ package com.mzb.cy.dao;
 
 import com.mzb.cy.dao.model.CyOrdLogDO;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -44,6 +45,27 @@ public interface CyOrdLogMapper {
     public Integer updateByPk(CyOrdLogDO record);
 
 
-    public List<CyOrdLogDO> queryForPage(CyOrdLogDO cyOrdLogDO);
+    @Select({"<script>" ,
+                "select count(1) from cy_ord_log  ",
+                "where 1=1",
+                    "<if test='transDate != null'>",
+                    "and trans_date=#{transDate}",
+                    "</if>",
+                    "<if test='transSeqId != null'>",
+                    "and trans_seq_id=#{transSeqId}",
+                    "</if>",
+                    "<if test='muCard != null'>",
+                        "and mu_card=#{muCard}",
+                    "</if>",
+                    "<if test='transType != null'>",
+                        "and trans_type=#{transType}",
+                    "</if>",
+                    "<if test='stat != null'>",
+                        "and stat=#{stat}",
+                    "</if>",
+            "</script>"})
+    public Integer countForPage(CyOrdLogDO condition);
+
+    public List<CyOrdLogDO> queryForPage(CyOrdLogDO condition);
 
 }

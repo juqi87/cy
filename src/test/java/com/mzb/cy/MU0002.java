@@ -13,7 +13,7 @@ public class MU0002 {
 
     public static void main(String[] args) {
 
-        String url= "https://test-m-stg3.ppppoints.com/partner-gateway/points/recharge/mu/placeOrder";
+        String url= "https://test-m-stg3.ppppoints.com/partner-gateway/points/recharge/mu/orderQuery";
         Map<String,String> head = new HashMap<>();
         head.put("AuthToken","123456");
         head.put("Content-Type","application/json");
@@ -24,17 +24,17 @@ public class MU0002 {
         StringBuilder content = new StringBuilder();
         content.append("interCode=").append("MU0001").append("&")
                 .append("character=").append("UTF-8").append("&")
+                .append("version=").append("1.0.0").append("&")
                 .append("ipAddress=").append("112.64.63.231").append("&")
                 .append("partnerId=").append("S9990188").append("&")
                 .append("requestId=").append(requestId).append("&")
                 .append("reqTime=").append(reqTime).append("&")
                 .append("signType=").append("MD5").append("&")
-                .append("version=").append("1.0.0").append("&")
+                .append("orderId=").append("").append("&")
                 .append("type=").append("api").append("&")
 
                 .append("muCard=").append("614011667001").append("&")
-                .append("notifyUrl=").append("https://open.jf.10086.cn/open/bind/bindForm").append("&")
-                .append("points=").append("100").append("&");
+                ;
 
         String[] arrs = content.toString().split("\\&");
         StringBuilder builder = new StringBuilder();
