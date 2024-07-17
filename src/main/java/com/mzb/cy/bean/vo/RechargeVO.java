@@ -15,4 +15,8 @@ public class RechargeVO {
     private Integer pageSize;
     private Integer totalNum;
 
+    private Integer draw;//
+    private Integer start;//pageNum  页码 从0开始
+    private Integer length;//pageSize 分页大小
+
 }

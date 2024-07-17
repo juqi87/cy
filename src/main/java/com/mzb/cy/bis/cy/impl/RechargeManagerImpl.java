@@ -106,17 +106,14 @@ public class RechargeManagerImpl implements RechargeManager {
             log.info("调用畅由支付接口成功，订单号:{}",rechargeResult.getOrderId());
             cyOrdLogDOUpdate.setStat(TransStatEnum.P.getCode())
                     .setOrdId(rechargeResult.getOrderId());
-
+            cyOrdLogMapper.updateByPk(cyOrdLogDOUpdate);
         }else{
             log.info("调用畅由支付接口失败，订单==>{}, resp=>:{}", cycleLogDO, result.getCode());
             cyOrdLogDOUpdate.setStat(TransStatEnum.F.getCode());
+            cyOrdLogMapper.updateByPk(cyOrdLogDOUpdate);
+            throw new BusinessException(result.getCode(), result.getMsg());
         }
 
-        resp = cyOrdLogMapper.updateByPk(cyOrdLogDOUpdate);
-        if(resp != 1){
-            log.error("更新订单日志失败, cyOrdLogDOUpdate==>{}", cyOrdLogDOUpdate);
-            throw new BusinessException(BasicRespCode.DATA_UPDATE_FAIL);
-        }
     }
 
     @Override
@@ -140,7 +137,6 @@ public class RechargeManagerImpl implements RechargeManager {
                 cyOrdLogVO.setStat(queryResult(cyOrdLogDO));
             }
             cyOrdLogVO.setStatDesc(Objects.requireNonNull(TransStatEnum.getByCode(cyOrdLogDO.getStat())).getDesc());
-
             vos.add(cyOrdLogVO);
         }
 

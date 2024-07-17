@@ -1,9 +1,11 @@
 package com.mzb.cy.controller.donghang;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.mzb.cy.base.BaseController;
 import com.mzb.cy.base.BaseResponse;
 import com.mzb.cy.base.BusinessException;
+import com.mzb.cy.base.DataTableResponse;
 import com.mzb.cy.bean.vo.CyOrdLogVO;
 import com.mzb.cy.bean.vo.RechargeVO;
 import com.mzb.cy.bis.cy.RechargeManager;
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -49,13 +52,20 @@ public class RechargeController extends BaseController {
         return successResp(null);
     }
 
+    @GetMapping("/cyOrdLogList")
+    public String cyOrdLogList(){
+        log.info("进入查询充值记录页面");
+
+        return "cy/cyLogList";
+    }
+
     @GetMapping("/queryCyOrdLogList")
     public String queryCyOrdLogList(ModelMap model, RechargeVO condition){
         log.info("进入查询充值记录页面");
 
         try{
             List<CyOrdLogVO> vos = rechargeManager.queryLogForPage(condition);
-            model.put("vos", JSON.toJSONString(vos));
+            model.put("vos", JSON.toJSONString(vos, SerializerFeature.WriteMapNullValue));
             model.put("condition", condition);
             log.info("查询充值记录成功, vos==>{}", vos);
             log.info("查询条件返回, condition==>{}", condition);
@@ -64,6 +74,29 @@ public class RechargeController extends BaseController {
         }
 
         return "cy/cyLogList";
+    }
+
+    @PostMapping("/queryCyOrdLogList")
+    @ResponseBody
+    public DataTableResponse<CyOrdLogVO> queryCyOrdLogList(RechargeVO condition){
+        log.info("分页查询呢畅由订单日志信息， condition==>{}", condition);
+        DataTableResponse<CyOrdLogVO> dataTableResponse = new DataTableResponse<CyOrdLogVO>();
+        dataTableResponse.setDraw(condition.getDraw());
+        try{
+            List<CyOrdLogVO> vos = rechargeManager.queryLogForPage(condition);
+            dataTableResponse.setData(vos)
+                            .setRecordsFiltered(condition.getTotalNum())
+                            .setRecordsTotal(condition.getTotalNum());
+        }catch(BusinessException be){
+            log.error("分页查询呢畅由订单日志信息异常", be);
+            dataTableResponse.setError(be.getMessage());
+        }catch(Exception e){
+            log.error("系统异常", e);
+            dataTableResponse.setError("系统异常");
+        }
+
+        log.info("分页查询呢畅由订单日志信息成功, dataTableResponse==>{}", dataTableResponse);
+        return dataTableResponse;
     }
 
 

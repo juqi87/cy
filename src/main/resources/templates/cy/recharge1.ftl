@@ -200,7 +200,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="/queryCyOrdLogList" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>畅由订单查询</p>
                                 </a>
@@ -312,8 +312,12 @@
         let muCard = $("#muCard").val();
         let points = $("#points").val();
         console.log(muCard, points)
-        if(muCard == null || points == null){
-            alert("请输入东航卡号和充值积分");
+        if(muCard == null || muCard === ''){
+            alert("请输入东航卡号");
+            return false;
+        }
+        if(points == null || points === ''){
+            alert("请输入充值积分");
             return false;
         }
 

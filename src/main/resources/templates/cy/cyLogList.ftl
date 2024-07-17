@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="/adminlte/themes/v3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/adminlte/themes/v3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="/adminlte/themes/v3/dist/css/adminlte.min.css?v=3.2.0">
+
+    <style>
+        .text-center {
+            text-align: center;
+        }
+    </style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -193,7 +200,12 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-
+                            <li class="nav-item">
+                                <a href="/recharge" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>积分充值</p>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link active">
                                     <i class="far fa-circle nav-icon"></i>
@@ -234,59 +246,13 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">DataTable with minimal features & hover style</h3>
-                            </div>
+<#--                            <div class="card-header">-->
+<#--                                <h3 class="card-title">DataTable with minimal features & hover style</h3>-->
+<#--                            </div>-->
 
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
-<#--                                    <thead>-->
-<#--                                    <tr style="text-align: center;">-->
-<#--                                        <th>日期</th>-->
-<#--                                        <th>流水号</th>-->
-<#--                                        <th>东航卡号</th>-->
-<#--                                        <th>积分</th>-->
-<#--                                        <th>IP</th>-->
-<#--                                        <th>状态</th>-->
-<#--                                        <th>畅由订单号</th>-->
-<#--                                        <th>畅由msg</th>-->
-<#--                                    </tr>-->
-<#--                                    </thead>-->
-<#--                                    <tbody>-->
-<#--                                        <#if vos??>-->
-<#--                                            <#list vos as vo>-->
-<#--                                                <tr style="text-align:center;">-->
-<#--                                                    <td>${vo.transDate!''}</td>-->
-<#--                                                    <td>${vo.transSeqId!''}</td>-->
-<#--                                                    <td>${vo.muCard!''}</td>-->
-<#--                                                    <td>${vo.points!''}</td>-->
-<#--                                                    <td>${vo.ipAddress!''}</td>-->
-<#--                                                    <td>${vo.statDesc!''}</td>-->
-<#--                                                    <td>${vo.ordId!''}</td>-->
-<#--                                                    <td>${vo.respMsg!''}</td>-->
-<#--                                                </tr>-->
-<#--                                            </#list>-->
-<#--                                        </#if>-->
-<#--                                    </tbody>-->
                                 </table>
-<#--                                <nav aria-label="Page navigation example">-->
-<#--                                    <ul class="pagination">-->
-
-<#--                                        <#if condition.totalNum??>-->
-<#--                                            <li class="page-item"><a class="page-link" href="#">上一页</a></li>-->
-
-<#--                                            <#list 1..(condition.totalNum/condition.pageSize+1) as i>-->
-<#--                                                <#if i == condition.pageNum>-->
-<#--                                                    <li class="page-item active"><a class="page-link" href="#">${i}</a></li>-->
-<#--                                                <#else>-->
-<#--                                                    <li class="page-item"><a class="page-link" href="#">${i}</a></li>-->
-<#--                                                </#if>-->
-<#--                                            </#list>-->
-
-<#--                                            <li class="page-item"><a class="page-link" href="#">下一页</a></li>-->
-<#--                                        </#if>-->
-<#--                                    </ul>-->
-<#--                                </nav>-->
                             </div>
 
                         </div>
@@ -339,32 +305,45 @@
 <script src="/adminlte/themes/v3/dist/js/demo.js"></script>
 <script>
     $(function () {
-        // $("#example1").DataTable({
-        //     "responsive": true,
-        //     "lengthChange": false,
-        //     "autoWidth": false,
-        //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
+        let draw;
+        let pageNum = 1;
+        let pageSize = 10;
+
+        let table = $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": false,
-            "ordering": true,
+            "ordering": false,
             "info": true,
             "autoWidth": false,
             "responsive": true,
-            "data": ${vos!''},
+            "processing": true,
+            "serverSide": true,
+            <#--"data": ${vos!''},-->
             "columns": [
-                { "title": "日期", "data": "transDate" },
-                { "title": "流水号", "data": "transSeqId" },
-                { "title": "卡号", "data": "muCard" },
-                { "title": "积分", "data": "points" },
-                { "title": "IP地址", "data": "ipAddress" },
-                { "title": "状态", "data": "statDesc" },
-                { "title": "商户号", "data": "partnerId" },
-                { "title": "订单号", "data": "ordId" },
-                { "title": "响应信息", "data": "respMsg" }
+                { "title": "日期", "data": "transDate", "className": "text-center" },
+                { "title": "流水号", "data": "transSeqId", "className": "text-center" },
+                { "title": "卡号", "data": "muCard", "className": "text-center" },
+                { "title": "积分", "data": "points", "className": "text-center" },
+                { "title": "IP地址", "data": "ipAddress", "className": "text-center" },
+                { "title": "状态", "data": "statDesc", "className": "text-center" },
+                { "title": "商户号", "data": "partnerId", "className": "text-center" },
+                { "title": "订单号", "data": "ordId" , "className": "text-center" },
+                { "title": "响应码", "data": "respCode", "className": "text-center" },
+                { "title": "响应信息", "data": "respMsg", "className": "text-center" }
             ],
+            "ajax": {
+                "url": '/queryCyOrdLogList',
+                "type": 'POST',
+                "data": function(d){
+                    console.log('d===>'+ JSON.stringify(d));
+                    console.log('start'+d.start);
+                    console.log('lenngth'+d.length);
+                    d.pageNum = Math.ceil(d.start / d.length) + 1; // 计算页码（注意：DataTables的页码是从0开始的，但通常我们习惯从1开始）
+                    d.pageSize = d.length;
+                    return d;
+                }
+            },
             "language": //把文字变为中文
                 {
                     "sProcessing": "加载中...",
@@ -387,8 +366,16 @@
                     },
                 },
         });
+
+        $('#example2').on('page.dt', function(){
+            console.log('翻页');
+            var pageNum = $(this).data('dt-idx') - 1; // 获取页码，从1开始，需减1
+            if (pageNum >= 0) {
+                table.page(pageNum).draw(false); // 跳转到指定页码并刷新表格
+            }
+            // table.ajax.reload();
+        }).dataTable();
     });
 </script>
-<#--<input type="hidden" value="${vos}" />-->
 </body>
 </html>
