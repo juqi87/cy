@@ -2,6 +2,7 @@ package com.mzb.cy.bis.cy.impl;
 
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.mzb.cy.base.BasicRespCode;
 import com.mzb.cy.base.BusinessException;
 import com.mzb.cy.bean.cy.QueryRechargeRequest;
@@ -91,7 +92,7 @@ public class RechargeManagerImpl implements RechargeManager {
                 .body();
         log.info("调用畅由支付接口，response:{}",response);
 
-        CyBaseResponse<RechargeResult> result = JSON.parseObject(response, CyBaseResponse.class);
+        CyBaseResponse<RechargeResult> result = JSON.parseObject(response, new TypeReference<CyBaseResponse<RechargeResult>>(){});
 
         CyOrdLogDO cyOrdLogDOUpdate = new CyOrdLogDO();
         cyOrdLogDOUpdate.setTransDate(transDate)
@@ -99,7 +100,8 @@ public class RechargeManagerImpl implements RechargeManager {
                         .setRespCode(result.getCode())
                         .setRespMsg(result.getMsg());
 
-        if(StringUtils.equals(result.getCode(), CyRespEnum.SUCCESS.getCode())){
+        if(StringUtils.equals(result.getCode(), CyRespEnum.SUCCESS.getCode())
+            || StringUtils.equals(result.getCode(), "0")){
             log.info("调用畅由支付接口成功，订单号:{}",result.getData().getOrderId());
             cyOrdLogDOUpdate.setStat(TransStatEnum.P.getCode())
                     .setOrdId(result.getData().getOrderId());
@@ -119,6 +121,11 @@ public class RechargeManagerImpl implements RechargeManager {
     @Override
     public List<CyOrdLogVO> queryLogForPage(RechargeVO vo) {
         log.info("分页查询log结果， condition==>{}", vo);
+
+        if(vo.getPageNum() == null){
+            vo.setPageNum(1)
+                .setPageSize(10);
+        }
 
         List<CyOrdLogDO> cyOrdLogDOList = cyOrdLogService.queryLogForPage(vo);
 

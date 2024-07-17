@@ -37,8 +37,8 @@
         <if test="stat != null">
             and stat=#{stat}
         </if>
-        ORDER BY trans_seq_id
-            LIMIT #{offset} , #{pageSize}
+        ORDER BY trans_date desc, trans_seq_id desc
+        LIMIT #{offset} , #{pageSize}
     </select>
 
 

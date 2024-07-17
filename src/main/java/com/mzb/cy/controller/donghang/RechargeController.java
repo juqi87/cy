@@ -8,11 +8,13 @@ import com.mzb.cy.bean.vo.RechargeVO;
 import com.mzb.cy.bis.cy.RechargeManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -47,11 +49,15 @@ public class RechargeController extends BaseController {
     }
 
     @GetMapping("/queryCyOrdLogList")
-    public String queryCyOrdLogList(){
+    public String queryCyOrdLogList(ModelMap model, RechargeVO condition){
         log.info("进入查询充值记录页面");
 
         try{
-
+            List<CyOrdLogVO> vos = rechargeManager.queryLogForPage(condition);
+            model.put("vos", vos);
+            model.put("condition", condition);
+            log.info("查询充值记录成功, vos==>{}", vos);
+            log.info("查询条件返回, condition==>{}", condition);
         } catch (Exception e) {
             log.error("查询充值记录异常", e);
         }

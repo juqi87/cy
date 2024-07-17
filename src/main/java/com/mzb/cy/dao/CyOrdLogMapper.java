@@ -17,7 +17,8 @@ public interface CyOrdLogMapper {
 
     //根据主键修改
     @Update({"<script>" ,
-                "<trim prefix='update' suffixOverrides=','>",
+                "update cy_ord_log ",
+                "<trim prefix='set' suffixOverrides=','>",
                     "<if test='ipAddress != null'>",
                         "ip_address=#{ipAddress},",
                     "</if>",
@@ -38,6 +39,12 @@ public interface CyOrdLogMapper {
                     "</if>",
                     "<if test='transType != null'>",
                         "trans_type=#{transType},",
+                    "</if>",
+                    "<if test='respCode != null'>",
+                        "resp_code=#{respCode},",
+                    "</if>",
+                    "<if test='respMsg != null'>",
+                        "resp_msg=#{respMsg},",
                     "</if>",
                 "</trim>",
             "where trans_date=#{transDate} and trans_seq_id=#{transSeqId}" ,
