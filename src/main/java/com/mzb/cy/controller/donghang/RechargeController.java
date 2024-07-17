@@ -1,5 +1,6 @@
 package com.mzb.cy.controller.donghang;
 
+import com.alibaba.fastjson.JSON;
 import com.mzb.cy.base.BaseController;
 import com.mzb.cy.base.BaseResponse;
 import com.mzb.cy.base.BusinessException;
@@ -54,7 +55,7 @@ public class RechargeController extends BaseController {
 
         try{
             List<CyOrdLogVO> vos = rechargeManager.queryLogForPage(condition);
-            model.put("vos", vos);
+            model.put("vos", JSON.toJSONString(vos));
             model.put("condition", condition);
             log.info("查询充值记录成功, vos==>{}", vos);
             log.info("查询条件返回, condition==>{}", condition);
