@@ -14,6 +14,8 @@ public class CyConstant {
     public static final String query_url = "https://test-m-stg3.ppppoints.com/partner-gateway/points/recharge/mu/orderQuery";
 //    public static final String url = "https://m.changyoyo.com/partner-gateway/points/output/mu/placeOrder";
 
-    public static final String notifyUrl = "https://open.jf.10086.cn/open/bind/bindForm";
+    public static final String notifyUrl = "/cyRechargeNotify";
+
+    public static final String ip_add = "112.64.63.231";
 
 }

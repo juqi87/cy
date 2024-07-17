@@ -3,10 +3,10 @@ package com.mzb.cy.bean.cy.base;
 import lombok.Data;
 
 @Data
-public class CyBaseResponse<T> {
+public class CyBaseResponse {
 
     private String code;
     private String msg;
-    private T data;
+    private String data;
 
 }

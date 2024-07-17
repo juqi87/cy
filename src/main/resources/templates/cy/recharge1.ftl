@@ -193,7 +193,12 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-
+                            <li class="nav-item">
+                                <a href="#" class="nav-link active">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>积分充值</p>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link active">
                                     <i class="far fa-circle nav-icon"></i>
@@ -217,12 +222,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>订单查询</h1>
+                        <h1>积分充值</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">订单查询</li>
+                            <li class="breadcrumb-item active">积分充值</li>
                         </ol>
                     </div>
                 </div>
@@ -233,64 +238,28 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                                <h3 class="card-title">积分充值</h3>
                             </div>
 
-                            <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
-<#--                                    <thead>-->
-<#--                                    <tr style="text-align: center;">-->
-<#--                                        <th>日期</th>-->
-<#--                                        <th>流水号</th>-->
-<#--                                        <th>东航卡号</th>-->
-<#--                                        <th>积分</th>-->
-<#--                                        <th>IP</th>-->
-<#--                                        <th>状态</th>-->
-<#--                                        <th>畅由订单号</th>-->
-<#--                                        <th>畅由msg</th>-->
-<#--                                    </tr>-->
-<#--                                    </thead>-->
-<#--                                    <tbody>-->
-<#--                                        <#if vos??>-->
-<#--                                            <#list vos as vo>-->
-<#--                                                <tr style="text-align:center;">-->
-<#--                                                    <td>${vo.transDate!''}</td>-->
-<#--                                                    <td>${vo.transSeqId!''}</td>-->
-<#--                                                    <td>${vo.muCard!''}</td>-->
-<#--                                                    <td>${vo.points!''}</td>-->
-<#--                                                    <td>${vo.ipAddress!''}</td>-->
-<#--                                                    <td>${vo.statDesc!''}</td>-->
-<#--                                                    <td>${vo.ordId!''}</td>-->
-<#--                                                    <td>${vo.respMsg!''}</td>-->
-<#--                                                </tr>-->
-<#--                                            </#list>-->
-<#--                                        </#if>-->
-<#--                                    </tbody>-->
-                                </table>
-<#--                                <nav aria-label="Page navigation example">-->
-<#--                                    <ul class="pagination">-->
 
-<#--                                        <#if condition.totalNum??>-->
-<#--                                            <li class="page-item"><a class="page-link" href="#">上一页</a></li>-->
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="muCard">东航卡号</label>
+                                        <input type="text" class="form-control" id="muCard" name="muCard" placeholder="请输入东航卡号">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="points">充值积分</label>
+                                        <input type="number" class="form-control" id="points" name="points" placeholder="请输入充值积分">
+                                    </div>
 
-<#--                                            <#list 1..(condition.totalNum/condition.pageSize+1) as i>-->
-<#--                                                <#if i == condition.pageNum>-->
-<#--                                                    <li class="page-item active"><a class="page-link" href="#">${i}</a></li>-->
-<#--                                                <#else>-->
-<#--                                                    <li class="page-item"><a class="page-link" href="#">${i}</a></li>-->
-<#--                                                </#if>-->
-<#--                                            </#list>-->
+                                </div>
 
-<#--                                            <li class="page-item"><a class="page-link" href="#">下一页</a></li>-->
-<#--                                        </#if>-->
-<#--                                    </ul>-->
-<#--                                </nav>-->
-                            </div>
-
+                                <div class="card-footer">
+                                    <button type="submit" id="submitBtn" class="btn btn-primary">充值</button>
+                                </div>
                         </div>
-
 
 
                     </div>
@@ -338,56 +307,35 @@
 
 <script src="/adminlte/themes/v3/dist/js/demo.js"></script>
 <script>
-    $(function () {
-        // $("#example1").DataTable({
-        //     "responsive": true,
-        //     "lengthChange": false,
-        //     "autoWidth": false,
-        //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-            "data": ${vos!''},
-            "columns": [
-                { "title": "日期", "data": "transDate" },
-                { "title": "流水号", "data": "transSeqId" },
-                { "title": "卡号", "data": "muCard" },
-                { "title": "积分", "data": "points" },
-                { "title": "IP地址", "data": "ipAddress" },
-                { "title": "状态", "data": "statDesc" },
-                { "title": "商户号", "data": "partnerId" },
-                { "title": "订单号", "data": "ordId" },
-                { "title": "响应信息", "data": "respMsg" }
-            ],
-            "language": //把文字变为中文
-                {
-                    "sProcessing": "加载中...",
-                    "sLengthMenu": "显示条数： _MENU_ ",
-                    "sZeroRecords": "没有匹配结果",
-                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-                    "sInfoPostFix": "",
-                    "sSearch": "搜索:",
-                    "sUrl": "",
-                    "sEmptyTable": "表中数据为空",
-                    "sLoadingRecords": "载入中...",
-                    "sInfoThousands": ",",
-                    "oPaginate": {
-                        "sFirst": "《", //首页
-                        "sPrevious": "<", //上一页
-                        "sNext": ">", //下一页
-                        "sLast": "》" //尾页
-                    },
-                },
-        });
-    });
+    //点击提交按钮，进行ajax表单提交
+    $("#submitBtn").click(function () {
+        let muCard = $("#muCard").val();
+        let points = $("#points").val();
+        console.log(muCard, points)
+        if(muCard == null || points == null){
+            alert("请输入东航卡号和充值积分");
+            return false;
+        }
+
+        $.ajax({
+            url: "doRecharge",
+            type: "post",
+            data: {
+                muCard: muCard,
+                points: points
+            },
+            success: function (data) {
+                console.log(data)
+                console.log("code====>"+data.code)
+                if(data == null || data.code != '0000'){
+                    alert(data.msg);
+                    return false;
+                }
+
+                alert("充值中");
+            }
+        })
+    })
 </script>
 <#--<input type="hidden" value="${vos}" />-->
 </body>

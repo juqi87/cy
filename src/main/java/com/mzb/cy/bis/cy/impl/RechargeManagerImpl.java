@@ -2,12 +2,11 @@ package com.mzb.cy.bis.cy.impl;
 
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.mzb.cy.base.BasicRespCode;
 import com.mzb.cy.base.BusinessException;
 import com.mzb.cy.bean.cy.QueryRechargeRequest;
 import com.mzb.cy.bean.cy.RechargeRequest;
-import com.mzb.cy.bean.cy.RechargeResponse;
+import com.mzb.cy.bean.cy.QueryRechargeResult;
 import com.mzb.cy.bean.cy.RechargeResult;
 import com.mzb.cy.bean.cy.base.CyBaseResponse;
 import com.mzb.cy.bean.vo.CyOrdLogVO;
@@ -57,7 +56,7 @@ public class RechargeManagerImpl implements RechargeManager {
                 .setStat(TransStatEnum.I.getCode())
                 .setMuCard(vo.getMuCard())
                 .setPoints(vo.getPoints().toString())
-                .setIpAddress("112.64.63.231")
+                .setIpAddress(CyConstant.ip_add)
                 .setPartnerId(CyConstant.partnerId);
 
         log.info("插入订单日志:{}", cycleLogDO);
@@ -72,7 +71,7 @@ public class RechargeManagerImpl implements RechargeManager {
                 .setPartnerId(CyConstant.partnerId)
                 .setMuCard(vo.getMuCard())
                 .setPoints(vo.getPoints().toString())
-                .setIpAddress("112.64.63.231")
+                .setIpAddress(CyConstant.ip_add)
                 .setReqTime(DateUtils.getCurrentDateTime())
                 .setNotifyUrl(CyConstant.notifyUrl);
 
@@ -92,7 +91,7 @@ public class RechargeManagerImpl implements RechargeManager {
                 .body();
         log.info("调用畅由支付接口，response:{}",response);
 
-        CyBaseResponse<RechargeResult> result = JSON.parseObject(response, new TypeReference<CyBaseResponse<RechargeResult>>(){});
+        CyBaseResponse result = JSON.parseObject(response, CyBaseResponse.class);
 
         CyOrdLogDO cyOrdLogDOUpdate = new CyOrdLogDO();
         cyOrdLogDOUpdate.setTransDate(transDate)
@@ -102,9 +101,11 @@ public class RechargeManagerImpl implements RechargeManager {
 
         if(StringUtils.equals(result.getCode(), CyRespEnum.SUCCESS.getCode())
             || StringUtils.equals(result.getCode(), "0")){
-            log.info("调用畅由支付接口成功，订单号:{}",result.getData().getOrderId());
+            RechargeResult rechargeResult = JSON.parseObject(result.getData(), RechargeResult.class);
+
+            log.info("调用畅由支付接口成功，订单号:{}",rechargeResult.getOrderId());
             cyOrdLogDOUpdate.setStat(TransStatEnum.P.getCode())
-                    .setOrdId(result.getData().getOrderId());
+                    .setOrdId(rechargeResult.getOrderId());
 
         }else{
             log.info("调用畅由支付接口失败，订单==>{}, resp=>:{}", cycleLogDO, result.getCode());
@@ -136,9 +137,8 @@ public class RechargeManagerImpl implements RechargeManager {
 
             //处理中主动查询订单状态
             if(StringUtils.equals(cyOrdLogDO.getStat(), TransStatEnum.P.getCode())){
-
+                cyOrdLogVO.setStat(queryResult(cyOrdLogDO));
             }
-
             cyOrdLogVO.setStatDesc(Objects.requireNonNull(TransStatEnum.getByCode(cyOrdLogDO.getStat())).getDesc());
 
             vos.add(cyOrdLogVO);
@@ -150,15 +150,18 @@ public class RechargeManagerImpl implements RechargeManager {
     @Override
     public String queryResult(CyOrdLogDO cyOrdLogDO) {
         log.info("调用畅由支付接口查询结果");
+        String logStat = cyOrdLogDO.getStat();
+
+
         Random random = new Random();
         int r = random.nextInt(1000)+1000;
         String requestId = "mzb-q" + r + cyOrdLogDO.getTransDate() + cyOrdLogDO.getTransSeqId();
         QueryRechargeRequest request = new QueryRechargeRequest();
-        request.setIpAddress("112.64.63.231")
+        request.setIpAddress(CyConstant.ip_add)
                 .setPartnerId(CyConstant.partnerId)
                 .setRequestId(requestId)
                 .setReqTime(DateUtils.getCurrentDateTime())
-                .setOrdId(cyOrdLogDO.getOrdId())
+                .setOrderId(cyOrdLogDO.getOrdId())
                 .setMuCard(cyOrdLogDO.getMuCard());
 
         String macContent = CySignUtils.signContent(request, CyConstant.key);
@@ -176,14 +179,31 @@ public class RechargeManagerImpl implements RechargeManager {
                 .body();
         log.info("调用畅由订单查询接口，response:{}",response);
 
-        CyBaseResponse<RechargeResult> result = JSON.parseObject(response, CyBaseResponse.class);
+        CyBaseResponse result = JSON.parseObject(response, CyBaseResponse.class);
 
-        //TODO
-        if(StringUtils.equals(result.getCode(), CyRespEnum.SUCCESS.getCode())){
+        if(StringUtils.equals(result.getCode(), CyRespEnum.SUCCESS.getCode())
+                || StringUtils.equals(result.getCode(), "0")){
+            QueryRechargeResult queryRechargeResult = JSON.parseObject(result.getData(), QueryRechargeResult.class);
+            switch (queryRechargeResult.getStatus()) {
+                case "0":
+                    break;
+                case "1":
+                    logStat = TransStatEnum.S.getCode();
+                    break;
+                case "2":
+                    logStat = TransStatEnum.F.getCode();
+                    break;
+                default:
+                    break;
+            }
 
+            CyOrdLogDO cyOrdLogDOUpdate = new CyOrdLogDO();
+            cyOrdLogDOUpdate.setTransDate(cyOrdLogDO.getTransDate())
+                    .setTransSeqId(cyOrdLogDO.getTransSeqId())
+                    .setStat(logStat);
+            cyOrdLogMapper.updateByPk(cyOrdLogDOUpdate);
+            cyOrdLogDO.setStat(logStat);
         }
-
-        //update DB
 
         return cyOrdLogDO.getStat();
     }
@@ -193,11 +213,11 @@ public class RechargeManagerImpl implements RechargeManager {
         CyOrdLogDO cyOrdLogDO = new CyOrdLogDO();
 
         QueryRechargeRequest request = new QueryRechargeRequest();
-        request.setIpAddress("112.64.63.231")
+        request.setIpAddress(CyConstant.ip_add)
                 .setPartnerId(CyConstant.partnerId)
                 .setRequestId("mzb-q" + transDate + transSeqId)
                 .setReqTime(DateUtils.getCurrentDateTime())
-                .setOrdId(cyOrdLogDO.getOrdId())
+                .setOrderId(cyOrdLogDO.getOrdId())
                 .setMuCard(cyOrdLogDO.getMuCard());
 
         String macContent = CySignUtils.signContent(request, CyConstant.key);

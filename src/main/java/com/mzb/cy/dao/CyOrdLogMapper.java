@@ -2,6 +2,7 @@ package com.mzb.cy.dao;
 
 import com.mzb.cy.dao.model.CyOrdLogDO;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -74,5 +75,9 @@ public interface CyOrdLogMapper {
     public Integer countForPage(CyOrdLogDO condition);
 
     public List<CyOrdLogDO> queryForPage(CyOrdLogDO condition);
+
+
+    @Select("select * from cy_ord_log where ord_id=#{ordId}")
+    public List<CyOrdLogDO> queryByOrdId(@Param("ordId") String ordId);
 
 }

@@ -28,7 +28,7 @@ public class RechargeController extends BaseController {
     public String toRecharge(){
         log.info("进入充值页面");
 
-        return "cy/recharge";
+        return "cy/recharge1";
     }
 
     @PostMapping("/doRecharge")

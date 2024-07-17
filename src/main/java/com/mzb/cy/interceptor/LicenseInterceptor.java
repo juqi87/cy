@@ -14,12 +14,12 @@ public class LicenseInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String license = request.getHeader("License-Key");
+//        String license = request.getHeader("License-Key");
 //        if (license == null || !LicenseManager.validateLicense(license)) {
 //            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "License is invalid or expired");
 //            return false;
 //        }
-        log.info("License is valid: {}", license);
+//        log.info("License is valid: {}", license);
         return true;
     }
 

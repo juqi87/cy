@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class QueryRechargeRequest {
 
-    private String interCode = "MU0001";
+    private String interCode = "MU0002";
     private String character = "UTF-8";//"00";
     private String version = "1.0.0";
     private String ipAddress;
@@ -18,7 +18,7 @@ public class QueryRechargeRequest {
     private String signType = "MD5";
     private String type = "api";
 
-    private String ordId;
+    private String orderId;
     private String muCard;
     private String hmac;
 

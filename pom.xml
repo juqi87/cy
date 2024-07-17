@@ -7,7 +7,7 @@
     <groupId>com.mzb.cy</groupId>
     <artifactId>cy</artifactId>
     <version>1.0.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>cy</name>
     <url>http://maven.apache.org</url>
@@ -137,5 +137,22 @@
             <version>5.5.1</version>
         </dependency>
     </dependencies>
+
+   <build>
+       <plugins>
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-jar-plugin</artifactId>
+               <version>3.2.0</version>
+               <configuration>
+                   <archive>
+                       <manifest>
+                           <mainClass>com.mzb.cy.CyServerApp</mainClass>
+                       </manifest>
+                   </archive>
+               </configuration>
+           </plugin>
+       </plugins>
+   </build>
 
 </project>
