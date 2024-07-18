@@ -18,21 +18,24 @@ create table sequence (
                           PRIMARY KEY (seq_name)
 );
 -- 创建 函数 用于获取序列当前值(v_seq_name 参数值 代表序列名称)（提供两种执行方式）
+DELIMITER //
 create function currval(v_seq_name VARCHAR(50))
     returns integer(11)
 begin
  declare value integer;
  set value = 0;
-select current_val into value  from sequence where seq_name = v_seq_name;
+select current_val into value  from  `sequence` where seq_name = v_seq_name;
 return value;
-end;
+end;//
+DELIMITER ;
 -- 创建 函数 用于获取序列下一个值(v_seq_name 参数值 代表序列名称)
+DELIMITER //
 create function nextval (v_seq_name VARCHAR(50)) returns integer
 begin
 update sequence set current_val = current_val + increment_val  where seq_name = v_seq_name;
 return currval(v_seq_name);
-end;
-
+end;//
+DELIMITER ;
 
 INSERT INTO sequence VALUES ('CY_ORD_SEQ_ID', '0', '1');
 
