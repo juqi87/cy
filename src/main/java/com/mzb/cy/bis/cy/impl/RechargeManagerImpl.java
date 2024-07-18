@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -128,6 +129,9 @@ public class RechargeManagerImpl implements RechargeManager {
         List<CyOrdLogDO> cyOrdLogDOList = cyOrdLogService.queryLogForPage(vo);
 
         List<CyOrdLogVO> vos = new ArrayList<>();
+        if(CollectionUtils.isEmpty(cyOrdLogDOList)){
+            return null;
+        }
         for (CyOrdLogDO cyOrdLogDO : cyOrdLogDOList) {
             CyOrdLogVO cyOrdLogVO = new CyOrdLogVO();
             BeanUtils.copyProperties(cyOrdLogDO, cyOrdLogVO);
