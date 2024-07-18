@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class CyServerApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(CyServerApp.class);
+        SpringApplication.run(CyServerApp.class, args);
     }
 
 }
