@@ -311,7 +311,11 @@
 
         let table = $('#example2').DataTable({
             "paging": true,
+            "pageLength": 10,
+            "lengthMenu": [ 10, 25, 50, 100 ],
+            "pagingType": "full_numbers",
             "lengthChange": false,
+
             "searching": false,
             "ordering": false,
             "info": true,
@@ -329,7 +333,7 @@
                 { "title": "状态", "data": "statDesc", "className": "text-center" },
                 { "title": "商户号", "data": "partnerId", "className": "text-center" },
                 { "title": "订单号", "data": "ordId" , "className": "text-center" },
-                { "title": "上次更新", "data": "updateAt", "className": "text-center" },
+                { "title": "上次更新", "data": "updateAtDesc", "className": "text-center" },
                 { "title": "响应码", "data": "respCode", "className": "text-center" },
                 { "title": "响应信息", "data": "respMsg", "className": "text-center" }
             ],

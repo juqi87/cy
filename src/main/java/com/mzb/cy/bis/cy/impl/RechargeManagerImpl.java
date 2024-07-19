@@ -29,7 +29,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.sql.Timestamp;
 import java.util.*;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+import java.time.LocalDateTime;
 
 @Service("rechargeManager")
 @Slf4j
@@ -80,7 +86,7 @@ public class RechargeManagerImpl implements RechargeManager {
 
 
         Map<String,String> head = new HashMap<>();
-        head.put("AuthToken","123456");
+        head.put("AuthToken", CyConstant.AuthToken);
         head.put("Content-Type","application/json");
 
         log.info("调用畅由支付接口，macContent:{}",macContent);
@@ -145,6 +151,9 @@ public class RechargeManagerImpl implements RechargeManager {
             if(StringUtils.isBlank(cyOrdLogDO.getOrdId())){
                 cyOrdLogVO.setOrdId("暂无");
             }
+            if(cyOrdLogDO.getUpdateAt() != null){
+                cyOrdLogVO.setUpdateAtDesc(convertTimestamp(cyOrdLogDO.getUpdateAt()));
+            }
             vos.add(cyOrdLogVO);
         }
 
@@ -171,7 +180,7 @@ public class RechargeManagerImpl implements RechargeManager {
         String macContent = CySignUtils.signContent(request, CyConstant.key);
 
         Map<String,String> head = new HashMap<>();
-        head.put("AuthToken","123456");
+        head.put("AuthToken", CyConstant.AuthToken);
         head.put("Content-Type","application/json");
 
         log.info("调用畅由订单查询接口，request:{}",macContent);
@@ -226,7 +235,7 @@ public class RechargeManagerImpl implements RechargeManager {
 
         String macContent = CySignUtils.signContent(request, CyConstant.key);
         Map<String,String> head = new HashMap<>();
-        head.put("AuthToken","123456");
+        head.put("AuthToken",CyConstant.AuthToken);
         head.put("Content-Type","application/json");
 
         log.info("调用畅由订单查询接口，macContent:{}",macContent);
@@ -241,5 +250,19 @@ public class RechargeManagerImpl implements RechargeManager {
 
 
         return null;
+    }
+
+    private String convertTimestamp(Timestamp timestamp){
+        // 将 Timestamp 转换为 ZonedDateTime，并指定时区为 UTC
+        ZonedDateTime utcDateTime = timestamp.toInstant().atZone(ZoneId.of("UTC"));
+
+        // 将 UTC 时间转换为北京时间（CST）
+        ZonedDateTime beijingDateTime = utcDateTime.withZoneSameInstant(ZoneId.of("Asia/Shanghai"));
+
+        // 定义日期格式
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // 转换为字符串
+        return beijingDateTime.format(formatter);
     }
 }

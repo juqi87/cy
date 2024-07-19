@@ -9,15 +9,18 @@ import com.mzb.cy.base.DataTableResponse;
 import com.mzb.cy.bean.vo.CyOrdLogVO;
 import com.mzb.cy.bean.vo.RechargeVO;
 import com.mzb.cy.bis.cy.RechargeManager;
+import com.mzb.cy.common.CyConstant;
+import com.mzb.cy.utils.IPUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -36,10 +39,17 @@ public class RechargeController extends BaseController {
 
     @PostMapping("/doRecharge")
     @ResponseBody
-    public BaseResponse<Integer> doRecharge(RechargeVO vo){
+    public BaseResponse<Integer> doRecharge(RechargeVO vo, HttpServletRequest request){
         log.info("开始进行积分充值业务, vo==>{}", vo);
         BaseResponse<Integer> baseResponse = new BaseResponse<Integer>();
         try{
+            String ip = IPUtils.getClientIP(request);
+            //判断ip是否在CyConstant.whiteIPs中
+            if(!contains( CyConstant.whiteIPs, ip)){
+                log.info("IP地址不在白名单内, ip==>{}", ip);
+                throw new BusinessException("1111","IP地址不在白名单内(CY)");
+            }
+
             rechargeManager.recharge(vo);
         }catch (BusinessException be) {
             log.error("积分充值业务异常", be);
@@ -99,6 +109,13 @@ public class RechargeController extends BaseController {
         return dataTableResponse;
     }
 
-
+    private boolean contains(String[] array, String value) {
+        for (String element : array) {
+            if (StringUtils.equals(element, value)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

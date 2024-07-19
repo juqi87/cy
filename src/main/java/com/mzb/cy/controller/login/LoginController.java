@@ -41,8 +41,12 @@ public class LoginController {
         }
 
         try{
-            if(!StringUtils.equals(user, CyConstant.user)
-                    || !StringUtils.equals(pwd, CyConstant.pwd)){
+//            if(!StringUtils.equals(user, CyConstant.user)
+//                    || !StringUtils.equals(pwd, CyConstant.pwd)){
+//                log.info("账号密码错误, user==>{}, pwd==>{}", user, pwd);
+//                throw new BusinessException("999", "账号或者密码错误");
+//            }
+            if(!StringUtils.equals(pwd, CyConstant.users.get(user))){
                 log.info("账号密码错误, user==>{}, pwd==>{}", user, pwd);
                 throw new BusinessException("999", "账号或者密码错误");
             }
