@@ -141,6 +141,10 @@ public class RechargeManagerImpl implements RechargeManager {
                 cyOrdLogVO.setStat(queryResult(cyOrdLogDO));
             }
             cyOrdLogVO.setStatDesc(Objects.requireNonNull(TransStatEnum.getByCode(cyOrdLogDO.getStat())).getDesc());
+
+            if(StringUtils.isBlank(cyOrdLogDO.getOrdId())){
+                cyOrdLogVO.setOrdId("暂无");
+            }
             vos.add(cyOrdLogVO);
         }
 

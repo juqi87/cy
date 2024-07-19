@@ -305,7 +305,7 @@
 
 <script src="/adminlte/themes/v3/dist/js/adminlte.min.js?v=3.2.0"></script>
 
-<script src="/adminlte/themes/v3/dist/js/demo.js"></script>
+<#--<script src="/adminlte/themes/v3/dist/js/demo.js"></script>-->
 <script>
     //点击提交按钮，进行ajax表单提交
     $("#submitBtn").click(function () {
