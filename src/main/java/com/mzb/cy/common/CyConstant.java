@@ -16,7 +16,7 @@ public class CyConstant {
     //生产
     public static final String partnerId = "S8889296";
     //key
-    public static final String key = "YjoU2wS4mWmT7XOW";
+    public static final String key = "qRicGbEvuQGKovcPnPO8kvbDoN6vstuo";
     public static final String AuthToken = "1DA7D2BFE5CCCD7ED45B57CF42C68F88";
     public static final String recharge_url = "https://m.changyoyo.com/partner-gateway/points/recharge/mu/placeOrder";
     public static final String query_url = "https://m.changyoyo.com/partner-gateway/points/recharge/mu/orderQuery";
@@ -35,7 +35,7 @@ public class CyConstant {
     }};
 
     public static final String[] whiteIPs = new String[]{"127.0.0.1", "0:0:0:0:0:0:0:1",
-                                                            "106.15.59.211",
+                                                            "106.15.59.211", "112.64.63.231",
             "106.115.45.71", "27.128.80.186", "106.119.53.138"
     };
 

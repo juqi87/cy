@@ -16,6 +16,7 @@
     <style>
         .text-center {
             text-align: center;
+            white-space: nowrap;
         }
     </style>
 
@@ -327,15 +328,16 @@
             "columns": [
                 { "title": "日期", "data": "transDate", "className": "text-center" },
                 { "title": "流水号", "data": "transSeqId", "className": "text-center" },
-                { "title": "卡号", "data": "muCard", "className": "text-center" },
+                { "title": "东航卡号", "data": "muCard", "className": "text-center" },
                 { "title": "积分", "data": "points", "className": "text-center" },
                 { "title": "IP地址", "data": "ipAddress", "className": "text-center" },
                 { "title": "状态", "data": "statDesc", "className": "text-center" },
                 { "title": "商户号", "data": "partnerId", "className": "text-center" },
                 { "title": "订单号", "data": "ordId" , "className": "text-center" },
+                { "title": "充值时间", "data": "createAtDesc", "className": "text-center" },
                 { "title": "上次更新", "data": "updateAtDesc", "className": "text-center" },
                 { "title": "响应码", "data": "respCode", "className": "text-center" },
-                { "title": "响应信息", "data": "respMsg", "className": "text-center" }
+                { "title": "畅由响应信息", "data": "respMsg", "className": "text-center" }
             ],
             "ajax": {
                 "url": '/queryCyOrdLogList',
@@ -364,10 +366,10 @@
                     "sLoadingRecords": "载入中...",
                     "sInfoThousands": ",",
                     "oPaginate": {
-                        "sFirst": "《", //首页
+                        "sFirst": "首页", //首页
                         "sPrevious": "<", //上一页
                         "sNext": ">", //下一页
-                        "sLast": "》" //尾页
+                        "sLast": "尾页" //尾页
                     },
                 },
         });

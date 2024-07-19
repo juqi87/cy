@@ -154,6 +154,9 @@ public class RechargeManagerImpl implements RechargeManager {
             if(cyOrdLogDO.getUpdateAt() != null){
                 cyOrdLogVO.setUpdateAtDesc(convertTimestamp(cyOrdLogDO.getUpdateAt()));
             }
+            if(cyOrdLogDO.getCreateAt() != null){
+                cyOrdLogVO.setCreateAtDesc(convertTimestamp(cyOrdLogDO.getCreateAt()));
+            }
             vos.add(cyOrdLogVO);
         }
 

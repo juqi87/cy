@@ -17,6 +17,7 @@ public class CyOrdLogVO extends CyOrdLogDO {
 
     private String statDesc;
 
+    private String createAtDesc;
     private String updateAtDesc;
 
 }
