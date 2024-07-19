@@ -1,1 +1,14 @@
 nohup java -jar cy-1.0.0-exec.jar > /dev/null 2> /dev/null &
+
+
+
+
+
+AIP产线Auth Token值：1DA7D2BFE5CCCD7ED45B57CF42C68F88
+商户：河北臻辰信息技术有限公司
+商户号:  S8889296
+商户source:  CS053204
+渠道号：02013635
+收银台key:uyu6a008
+接口加密密钥16位: YjoU2wS4mWmT7XOW
+接口签名密钥32位: qRicGbEvuQGKovcPnPO8kvbDoN6vstuo
