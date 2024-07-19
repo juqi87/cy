@@ -1,0 +1,1 @@
+nohup java -jar cy-1.0.0-exec.jar > /dev/null 2> /dev/null &
