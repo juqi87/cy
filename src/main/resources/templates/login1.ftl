@@ -83,6 +83,8 @@
 <script src="/adminlte/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script src="/adminlte/themes/v3/dist/js/adminlte.min.js?v=3.2.0"></script>
+<script src="/common/md5.js?v=3.2.0"></script>
+
 
 <script>
     $(function () {
@@ -94,7 +96,7 @@
             if (user == '' || pwd == ''){
                 alert('账号或密码不能为空');
             }
-
+            pwd = md5(pwd+getCurrentDate());
             $.ajax({
                 url: '/login',
                 type: 'post',
@@ -114,6 +116,16 @@
 
 
         })
+
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear(); // 获取年份
+            let month = (now.getMonth() + 1).toString().padStart(2, '0'); // 获取月份，加1转为常规月份表示，并补零
+            let day = now.getDate().toString().padStart(2, '0'); // 获取日，并补零
+
+            return year + month + day; // 拼接并返回
+        }
+
     })
 
 </script>

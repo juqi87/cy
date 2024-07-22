@@ -44,11 +44,12 @@ public class RechargeController extends BaseController {
         BaseResponse<Integer> baseResponse = new BaseResponse<Integer>();
         try{
             String ip = IPUtils.getClientIP(request);
+            log.info("充值IP=====>{}", ip);
             //判断ip是否在CyConstant.whiteIPs中
-            if(!contains( CyConstant.whiteIPs, ip)){
-                log.info("IP地址不在白名单内, ip==>{}", ip);
-                throw new BusinessException("1111","IP地址不在白名单内(CY)");
-            }
+//            if(!contains( CyConstant.whiteIPs, ip)){
+//                log.info("IP地址不在白名单内, ip==>{}", ip);
+//                throw new BusinessException("1111","IP地址不在白名单内(CY)");
+//            }
 
             rechargeManager.recharge(vo);
         }catch (BusinessException be) {

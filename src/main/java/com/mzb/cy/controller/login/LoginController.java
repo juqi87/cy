@@ -4,6 +4,8 @@ import com.mzb.cy.base.BaseResponse;
 import com.mzb.cy.base.BusinessException;
 import com.mzb.cy.base.DataTableResponse;
 import com.mzb.cy.common.CyConstant;
+import com.mzb.cy.utils.DateUtils;
+import com.mzb.cy.utils.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -46,7 +48,14 @@ public class LoginController {
 //                log.info("账号密码错误, user==>{}, pwd==>{}", user, pwd);
 //                throw new BusinessException("999", "账号或者密码错误");
 //            }
-            if(!StringUtils.equals(pwd, CyConstant.users.get(user))){
+            String serverPwd = CyConstant.users.get(user);
+            if(StringUtils.isBlank(serverPwd)){
+                log.info("账号密码错误, user==>{}, pwd==>{}", user, pwd);
+                throw new BusinessException("999", "账号或者密码错误");
+            }
+            serverPwd = MD5Utils.md5sign(serverPwd+ DateUtils.getCurrentDate(), "utf-8");
+            log.info("serverPwd==>{}", serverPwd);
+            if(!StringUtils.equals(pwd, serverPwd)){
                 log.info("账号密码错误, user==>{}, pwd==>{}", user, pwd);
                 throw new BusinessException("999", "账号或者密码错误");
             }
