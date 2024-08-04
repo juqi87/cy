@@ -12,6 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.swing.plaf.nimbus.NimbusStyle;
@@ -25,7 +27,7 @@ public class RechargeNotifyController {
     private CyOrdLogMapper cyOrdLogMapper;
 
 
-    @GetMapping("/cyRechargeNotify")
+    @PostMapping("/cyRechargeNotify")
     public CyBaseResponse cyRechargeNotify(CyRechargeNotifyRequest request) {
         log.info("畅由订单异步响应通知， CyRechargeNotifyRequest==>{}", request);
         CyBaseResponse cyBaseResponse = new CyBaseResponse();

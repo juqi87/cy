@@ -80,4 +80,26 @@ public interface CyOrdLogMapper {
     @Select("select * from cy_ord_log where ord_id=#{ordId}")
     public List<CyOrdLogDO> queryByOrdId(@Param("ordId") String ordId);
 
+
+    @Select({"<script>" ,
+                "select * from cy_ord_log " +
+                "where 1=1 " +
+                    "<if test='transDate != null'>",
+                        "and trans_date=#{transDate} ",
+                    "</if>",
+                    "<if test='transSeqId != null'>",
+                        "and trans_seq_id=#{transSeqId} ",
+                    "</if>",
+                    "<if test='muCard != null'>",
+                        "and mu_card=#{muCard} ",
+                    "</if>",
+                    "<if test='points != null'>",
+                        "and points=#{points} ",
+                        "</if>",
+                    "<if test='stat != null'>",
+                        "and stat=#{stat} ",
+                    "</if>",
+            "</script>"})
+    public List<CyOrdLogDO> selectByCondition(CyOrdLogDO condition);
+
 }

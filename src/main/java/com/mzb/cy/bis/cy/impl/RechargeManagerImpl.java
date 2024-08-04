@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.mzb.cy.base.BasicRespCode;
 import com.mzb.cy.base.BusinessException;
 import com.mzb.cy.bean.cy.QueryRechargeRequest;
-import com.mzb.cy.bean.cy.RechargeRequest;
 import com.mzb.cy.bean.cy.QueryRechargeResult;
+import com.mzb.cy.bean.cy.RechargeRequest;
 import com.mzb.cy.bean.cy.RechargeResult;
 import com.mzb.cy.bean.cy.base.CyBaseResponse;
 import com.mzb.cy.bean.vo.CyOrdLogVO;
@@ -30,12 +30,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.sql.Timestamp;
-import java.util.*;
-
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.ZoneId;
-import java.time.LocalDateTime;
+import java.util.*;
 
 @Service("rechargeManager")
 @Slf4j
@@ -55,6 +53,20 @@ public class RechargeManagerImpl implements RechargeManager {
         String transDate = DateUtils.getCurrentDate();
         String transSeqId = sequenceService.getCyOrdSeqId();
         String requestId = "mzb" + transDate + transSeqId;
+
+        CyOrdLogDO conditions = new CyOrdLogDO()
+                                        .setTransDate(transDate)
+                                        .setMuCard(vo.getMuCard())
+                                        .setPoints(vo.getPoints().toString())
+                ;
+        List<CyOrdLogDO> cyOrdLogDOList = cyOrdLogMapper.selectByCondition(conditions);
+        if(!CollectionUtils.isEmpty(cyOrdLogDOList)){
+            for (CyOrdLogDO cyOrdLogDO : cyOrdLogDOList){
+                if(!StringUtils.equals(cyOrdLogDO.getStat(), TransStatEnum.F.getCode())) {
+                    throw new BusinessException(BasicRespCode.REAPEATED);
+                }
+            }
+        }
 
         CyOrdLogDO cycleLogDO = new CyOrdLogDO();
         cycleLogDO.setTransDate(transDate)
