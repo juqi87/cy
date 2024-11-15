@@ -32,6 +32,8 @@ public class CyConstant {
     public static final HashMap<String, String> users = new HashMap<String, String>() {{
         put("mzb", "mzb20240708");
         put("17702108984", "Aa11223@");
+        put("19555905050", "AA11223@");
+        put("17321349775", "Ab11223@");
     }};
 
     public static final String[] whiteIPs = new String[]{"127.0.0.1", "0:0:0:0:0:0:0:1",
